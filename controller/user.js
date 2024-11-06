@@ -12,13 +12,17 @@ exports.registerUser = async (req, res) => {
     return res.status(201).json(response);
     
   } catch (error) {
+    // Menampilkan informasi error secara lengkap di console
     console.error('Error in registerUser controller:', error.message);
-    
-    // Menggunakan createResponse untuk merespons error
-    const response = responseHelper.createResponse(400, false, 'Error registering user', error.message);
+    console.error('Stack Trace:', error.stack);
+
+    // Menambahkan informasi error lebih detail untuk dikirim ke response (tanpa menampilkan stack trace ke user)
+    const errorMessage = error.message || 'An unknown error occurred';
+    const response = responseHelper.createResponse(400, false, 'Error registering user', errorMessage);
     return res.status(400).json(response);
   }
 };
+
 
 // Fungsi untuk login user
 exports.loginUser = async (req, res) => {
